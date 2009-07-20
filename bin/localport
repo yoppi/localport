@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+$load_path.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'localport'
+LocalPort.invoke(ARGV.dup)
+
+# vim: filetype=ruby
