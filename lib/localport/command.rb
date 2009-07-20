@@ -1,7 +1,7 @@
 ##
 # Definition localport commands
 #
-require 'config'
+require 'localport/config'
 
 module LocalPort
   class Command

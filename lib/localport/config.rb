@@ -8,7 +8,6 @@ module LocalPort
   HOME = ENV['HOME']
   LocalPort::CONF_DIR = "#{HOME}/.localport"
   LocalPort::CONF_FILE = LocalPort::CONF_DIR + "/config"
-  
 
   class Config
     

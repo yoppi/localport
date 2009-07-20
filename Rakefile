@@ -4,13 +4,8 @@ require 'rake/clean'
 require 'rake/gempackagetask'
 require 'localport'
 
-desk "default task"
+desc "default task"
 task :default => [:install]
-
-desk "install task"
-task :install => [:package] do
-  sh "gem install pkg/#{name}-#{version}.gem"
-end
 
 name = "localport"
 version = LocalPort::VERSION
@@ -45,3 +40,8 @@ task :gemspec do
 end
 
 CLEAN.include %w{pkg}
+
+desc "install task"
+task :install => [:package] do
+  sh "gem install pkg/#{name}-#{version}.gem"
+end
