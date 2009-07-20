@@ -41,6 +41,9 @@ module LocalPort
     end
 
     def parse_args(args)
+      if args.size == 0
+        raise ArgumentError, usage
+      end
       command = args.shift
       [command, args]
     end
@@ -51,7 +54,7 @@ module LocalPort
 
     def usage
       <<-"USAGE"
-      Usage: #{$1} [commands] {app}
+      Usage: #{$1} {command} [app]
 
       USAGE
     end
