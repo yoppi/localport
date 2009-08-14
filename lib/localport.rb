@@ -1,4 +1,5 @@
-
+# -*- coding: utf-8 -*-
+#
 # Add the directory containing this file to the start of the load path
 # if it doesn't include alreadry.
 libdir = File.dirname(__FILE__)

@@ -1,7 +1,8 @@
-##
+# -*- coding: utf-8 -*-
+#
 # Cofigure localport
 # 
-require 'rubygems'
+require 'rubygems' if RUBY_VERSION < "1.9"
 require 'highline'
 
 module LocalPort

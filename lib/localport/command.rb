@@ -1,4 +1,5 @@
-##
+# -*- coding: utf-8 -*-
+#
 # Definition localport commands
 #
 require 'localport/config'
