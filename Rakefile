@@ -43,5 +43,6 @@ CLEAN.include %w{pkg}
 
 desc "install task"
 task :install => [:package] do
-  sh "gem install pkg/#{name}-#{version}.gem"
+  gem = File.dirname(ENV['_']) + "/gem"
+  sh "#{gem} install pkg/#{name}-#{version}.gem"
 end
