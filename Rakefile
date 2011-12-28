@@ -1,48 +1,42 @@
-$LOAD_PATH.unshift File.dirname(__FILE__) + "/lib"
+# encoding: utf-8
 
-require 'rake/clean'
-require 'rake/gempackagetask'
-require 'localport'
+require 'rubygems'
+require 'bundler'
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+require 'rake'
 
-desc "default task"
-task :default => [:install]
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.name = "localport"
+  gem.homepage = "http://github.com/yoppi/localport"
+  gem.license = "MIT"
+  gem.summary = %Q{Local Application management system}
+  gem.description = %Q{localport is a local application management system}
+  gem.email = "y.hirokazu@gmail.com"
+  gem.authors = ["yoppi"]
+  # dependencies defined in Gemfile
+end
+Jeweler::RubygemsDotOrgTasks.new
 
-name = "localport"
-version = LocalPort::VERSION
-
-spec = Gem::Specification.new do |s|
-  s.name = name
-  s.version = version
-  s.summary = "Local Application management system"
-  s.description = "localport is a local application management system"
-  s.files = %w{README Rakefile} + Dir["lib/**/*"]
-  s.executables = %w{localport}
-  s.add_dependency("highline", ">= 1.5.0")
-  s.authors = %w{yoppi}
-  s.email = "y.hirokazu@gmail.com"
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-Rake::GemPackageTask.new(spec) do |p|
-  p.need_tar = true
+RSpec::Core::RakeTask.new(:rcov) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
 end
 
-task :gemspec do
-  filename = "#{name}.gemspec"
-  open(filename, 'w') do |f|
-    f.write spec.to_ruby
-  end
-  puts <<-EOS
-  Successfully generated gemspec
-  Name: #{name}
-  Version: #{version}
-  File: #{filename}
-  EOS
-end
+task :default => :spec
 
-CLEAN.include %w{pkg}
-
-desc "install task"
-task :install => [:package] do
-  gem = File.dirname(ENV['_']) + "/gem"
-  sh "#{gem} install pkg/#{name}-#{version}.gem"
-end
+require 'yard'
+YARD::Rake::YardocTask.new
