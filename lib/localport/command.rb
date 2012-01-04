@@ -5,6 +5,7 @@
 require 'localport/config'
 
 module LocalPort
+  class CommandError < ::StandardError; end
   class Command
     attr_reader :commands
 
@@ -166,6 +167,7 @@ module LocalPort
     end
 
     def find(name)
+      raise LocalPort::CommandError.new(name) unless @commands.key? name
       @commands[name]
     end
 

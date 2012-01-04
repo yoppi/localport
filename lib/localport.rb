@@ -17,21 +17,23 @@ module LocalPort
 
   class << self
     def invoke(argv)
-      load_config() # to set location of applications
-      correct_installed_app() # correct installed applications
-
-      command, args = parse_args(argv)
-      command = find_command(command)
-      
       begin
+        load_config() # to set location of applications
+        correct_installed_app() # correct installed applications
+
+        command, args = parse_args(argv)
+        command = find_command(command)
+
         command[:exec].call args
+      rescue LocalPort::CommandError => e
+        puts "localport: '#{e.message}' is not a localport command."
       rescue => e
         raise e
       end
     end
 
     def load_config
-      unless File.exist? LocalPort::CONF_FILE 
+      unless File.exist? LocalPort::CONF_FILE
         config.setup
       end
       load LocalPort::CONF_FILE
