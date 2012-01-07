@@ -5,7 +5,7 @@ require 'spec_helper'
 
 describe LocalPort::Command do
   it "should raise CommandError in unknown command" do
-    expect { LocalPort.command.find("foo") }.should raise_error(
+    expect { LocalPort.command.find("foo") }.to raise_error(
       LocalPort::CommandError, "foo"
     )
   end
