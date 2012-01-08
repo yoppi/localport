@@ -26,7 +26,7 @@ module LocalPort
 
         command[:exec].call args
       rescue LocalPort::CommandError => e
-        puts "localport: '#{e.message}' is not a localport command."
+        puts "localport: #{e.message}"
       rescue => e
         raise e
       end

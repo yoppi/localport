@@ -6,7 +6,7 @@ require 'spec_helper'
 describe LocalPort::Command do
   it "should raise CommandError in unknown command" do
     expect { LocalPort.command.find("foo") }.to raise_error(
-      LocalPort::CommandError, "foo"
+      LocalPort::CommandError
     )
   end
 
@@ -16,3 +16,13 @@ describe LocalPort::Command do
   end
 end
 
+describe LocalPort::Command, "#install" do
+  context "path is emtpy" do
+    it "should raise CommandError in no args" do
+      command = LocalPort.command.find("install")
+      expect { command[:exec].call([]) }.to raise_error(
+        LocalPort::CommandError
+      )
+    end
+  end
+end

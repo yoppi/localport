@@ -83,9 +83,9 @@ module LocalPort
       puts " %s #{ver}" % status
     end
 
-    def install(paths)
-      if paths.size == 0
-        raise ArgumentError, "must specify to install application path"
+    def install(paths=[])
+      if paths.empty?
+        raise LocalPort::CommandError, "must specify to installed application path."
       end
 
       paths.each do |path|
@@ -167,7 +167,7 @@ module LocalPort
     end
 
     def find(name)
-      raise LocalPort::CommandError.new(name) unless @commands.key? name
+      raise LocalPort::CommandError, "'#{name}' is not a localport command." unless @commands.key? name
       @commands[name]
     end
 
