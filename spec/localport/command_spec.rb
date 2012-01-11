@@ -26,3 +26,9 @@ describe LocalPort::Command, "#install" do
     end
   end
 end
+
+describe LocalPort::Command do
+  it "should get command list" do
+    LocalPort.command.list.sort.should == %w[activate deactivate install installed uninstall]
+  end
+end

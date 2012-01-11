@@ -83,6 +83,10 @@ module LocalPort
       puts " %s #{ver}" % status
     end
 
+    def list
+      @commands.keys
+    end
+
     def install(paths=[])
       if paths.empty?
         raise LocalPort::CommandError, "must specify to installed application path."

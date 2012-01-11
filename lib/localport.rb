@@ -44,21 +44,27 @@ module LocalPort
     end
 
     def parse_args(args)
-      if args.size == 0
-        raise ArgumentError, usage
+      if args.empty?
+        puts usage()
+        exit 1
       end
       command = args.shift
       [command, args]
     end
 
     def find_command(name)
-      command.find name 
+      command.find name
+    end
+
+    def list_command
+      command.list
     end
 
     def usage
       <<-"USAGE"
-      Usage: #{$1} {command} [app]
-
+Usage: #{File.basename $0} <command> [app]
+  command list:
+    #{list_command.join("\n    ")}
       USAGE
     end
   end
