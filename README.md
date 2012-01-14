@@ -19,13 +19,13 @@ There is some restrictions, following:
   This directory is called "application directory" on system.
   Like this,
 
-        /Users/user/apps
+        ~/apps
 
 * And, you must specify execute directory.
   This directory is called "executional directory"
   Like this,
 
-        /Users/user/local/bin
+        ~/local/bin
 
 Ok, Let's control Ruby-1.8.7.-p160 with localport.
 
@@ -33,15 +33,15 @@ Ok, Let's control Ruby-1.8.7.-p160 with localport.
 
         $ tar zxvf ruby-1.8.7-p160.tar.gz
         $ cd ruby-1.8.7-p160
-        $ ./configure --prefix=/Users/user/apps/ruby/ruby-1.8.7-p160
+        $ ./configure --prefix=$HOME/apps/ruby/ruby-1.8.7-p160
 
 2.  Install that to "execution directory"
 
-        $ localport install /Users/user/apps/ruby/ruby-1.8.7-p160
+        $ localport install ~/apps/ruby/ruby-1.8.7-p160
 
     This command make symbolic links that are Ruby applications in
 
-        /Users/user/apps/ruby/ruby-1.8.7-p160/bin/*
+        ~/apps/ruby/ruby-1.8.7-p160/bin/*
 
 3.  Then, Activate that.
 
