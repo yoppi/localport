@@ -27,6 +27,17 @@ describe LocalPort::Command, "#install" do
   end
 end
 
+describe LocalPort::Command, "activate" do
+  context "activate with no app" do
+    it "should raise CommandError" do
+      command = LocalPort.command.find("activate")
+      expect { command[:exec].call([]) }.to raise_error(
+        LocalPort::CommandError
+      )
+    end
+  end
+end
+
 describe LocalPort::Command do
   it "should get command list" do
     LocalPort.command.list.sort.should == %w[activate deactivate install installed uninstall]
