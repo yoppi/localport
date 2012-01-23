@@ -19,6 +19,9 @@ module LocalPort
         :name => "install",
         :args => true,
         :exec => lambda {|args|
+          if args.empty?
+            raise LocalPort::CommandError, "must specify to installed application path."
+          end
           install args
         }
       )
@@ -57,11 +60,10 @@ module LocalPort
         :name => "activate",
         :args => true,
         :exec => lambda {|args|
-          if !args.empty?
-            args.each {|app| activate app }
-          else
+          if args.empty?
             raise LocalPort::CommandError, "must specify verbose application name. {app}-{version}"
           end
+          args.each {|app| activate app }
         }
       )
 
@@ -69,11 +71,10 @@ module LocalPort
         :name => "deactivate",
         :args => true,
         :exec => lambda {|args|
-          if !args.empty?
-            args.each {|app| deactivate app }
-          else
+          if args.empty?
             raise LocalPort::CommandError, "must specify verbose application name. {app}-{version}"
           end
+          args.each {|app| deactivate app }
         }
       )
     end
@@ -88,10 +89,6 @@ module LocalPort
     end
 
     def install(paths=[])
-      if paths.empty?
-        raise LocalPort::CommandError, "must specify to installed application path."
-      end
-
       paths.each do |path|
         bins = Dir[sanitize(path) + "/bin/*"]
         bins.each do |bin|
