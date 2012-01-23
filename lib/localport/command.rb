@@ -97,7 +97,9 @@ module LocalPort
           bin_app_version = bin.split('/')[-3] # => vim-7.2
           bin_version = bin_app_version.gsub(/^#{bin_app}/, '') # => -7.2
           bin_name = File.basename bin # => vim
-          link = LocalPort::LINK_DIR + "/" + bin_name + bin_version
+          bin_ext = File.extname bin
+          link = File.join(LocalPort::LINK_DIR,
+                           (bin_name.gsub(bin_ext, '') + bin_version + bin_ext))
           File.symlink(bin, link) unless File.exist? link
         end
       end
