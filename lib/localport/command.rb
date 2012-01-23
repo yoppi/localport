@@ -69,10 +69,10 @@ module LocalPort
         :name => "deactivate",
         :args => true,
         :exec => lambda {|args|
-          if args
+          if !args.empty?
             args.each {|app| deactivate app }
           else
-            raise ArgumentError, "must specify verbose application name"
+            raise LocalPort::CommandError, "must specify verbose application name. {app}-{version}"
           end
         }
       )
