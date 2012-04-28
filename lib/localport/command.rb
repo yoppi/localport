@@ -42,7 +42,7 @@ module LocalPort
             args.each do |app|
               puts "#{app}:"
               config.installed[app].keys.each {|ver|
-                puts_version(app, ver) 
+                puts_version(app, ver)
               }
             end
           else
@@ -92,14 +92,13 @@ module LocalPort
       paths.each do |path|
         bins = Dir[sanitize(path) + "/bin/*"]
         bins.each do |bin|
-          # e.g. /Users/user/apps/vim/vim-7.2/bin/vim
+          # e.g. /Users/user/apps/vim/7.2/bin/vim
           bin_app = bin.split('/')[-4] # => vim
-          bin_app_version = bin.split('/')[-3] # => vim-7.2
-          bin_version = bin_app_version.gsub(/^#{bin_app}/, '') # => -7.2
+          bin_version = bin.split('/')[-3] # => 7.2
           bin_name = File.basename bin # => vim
           bin_ext = File.extname bin
           link = File.join(LocalPort::LINK_DIR,
-                           (bin_name.gsub(bin_ext, '') + bin_version + bin_ext))
+                           (bin_name.gsub(bin_ext, '') + "-"+ bin_version + bin_ext))
           File.symlink(bin, link) unless File.exist? link
         end
       end
@@ -135,7 +134,7 @@ module LocalPort
       #       違うバージョンのときのみにエラーを吐く
       app, ver = split_appver_to_app_ver(appver)
       if activated_ver = config.activated[app]
-        if activated_ver != ver 
+        if activated_ver != ver
           raise ArgumentError, "already activated *#{app}-#{activated_ver}*\nplease deactivate first"
         end
       end

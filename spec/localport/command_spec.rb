@@ -29,8 +29,8 @@ describe LocalPort::Command, "#install" do
   end
 
   context "install .exe file in cygwin" do
-    let(:bin) { File.join(File.dirname(__FILE__), "test/test-0.0.0/bin/test.exe") }
-    let(:app) { File.join(File.dirname(__FILE__), "test/test-0.0.0") }
+    let(:bin) { File.join(File.dirname(__FILE__), "test/0.0.0/bin/test.exe") }
+    let(:app) { File.join(File.dirname(__FILE__), "test/0.0.0") }
     let(:symlink) { File.join(File.dirname(__FILE__), "test-0.0.0.exe") }
     let(:install) { LocalPort.command.find("install") }
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cofigure localport
-# 
+#
 require 'rubygems' if RUBY_VERSION < "1.9"
 require 'highline'
 
@@ -11,7 +11,7 @@ module LocalPort
   LocalPort::CONF_FILE = LocalPort::CONF_DIR + "/config"
 
   class Config
-    
+
     attr_reader :installed, :activated
 
     def self.instance
@@ -27,7 +27,7 @@ module LocalPort
       ui = HighLine.new
       apps_dir = ui.ask("Where is your applications directory: ")
       link_dir = ui.ask("Where is your link directory: ")
-      config = template(apps_dir, link_dir) 
+      config = template(apps_dir, link_dir)
       Dir.mkdir(LocalPort::CONF_DIR) unless File.exist? LocalPort::CONF_DIR
       File.open(LocalPort::CONF_FILE, 'w') {|io|
         io << config
@@ -44,7 +44,7 @@ LocalPort::LINK_DIR = '%s'" % [apps_dir, link_dir]
       symlinks = Dir["#{dir}/*"]
       symlinks.each do |symlink|
         next unless File.symlink? symlink
-        
+
         src = File.readlink symlink
         same_dir_p = same_dir?(src, symlink)
         if same_dir_p
@@ -71,7 +71,7 @@ LocalPort::LINK_DIR = '%s'" % [apps_dir, link_dir]
           add_activated(app, version)
           next
         end
-        
+
         @installed[app] ||= {}
         app_versions = @installed[app]
         app_versions[version] ||= []
@@ -85,7 +85,7 @@ LocalPort::LINK_DIR = '%s'" % [apps_dir, link_dir]
     end
 
     def add_activated(app, version)
-      @activated[app] = version unless @activated[app] 
+      @activated[app] = version unless @activated[app]
     end
   end
 end
