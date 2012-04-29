@@ -90,17 +90,10 @@ module LocalPort
 
     def install(paths=[])
       paths.each do |path|
-        bins = Dir[sanitize(path) + "/bin/*"]
-        bins.each do |bin|
-          # e.g. /Users/user/apps/vim/7.2/bin/vim
-          bin_app = bin.split('/')[-4] # => vim
-          bin_version = bin.split('/')[-3] # => 7.2
-          bin_name = File.basename bin # => vim
-          bin_ext = File.extname bin
-          link = File.join(LocalPort::LINK_DIR,
-                           (bin_name.gsub(bin_ext, '') + "-"+ bin_version + bin_ext))
+        bins = Dir[sanitize(path) + "/bin/*", sanitize(path) + "/sbin/*"]
+        symlinks(bins).each {|bin, link|
           File.symlink(bin, link) unless File.exist? link
-        end
+        }
       end
     end
 
@@ -197,6 +190,19 @@ module LocalPort
         path = path.chop
       end
       path
+    end
+
+    def symlinks(bins)
+      bins.inject({}) {|ret, bin|
+        bin_app = bin.split('/')[-4] # => vim
+        bin_version = bin.split('/')[-3] # => 7.2
+        bin_name = File.basename bin # => vim
+        bin_ext = File.extname bin
+        link = File.join(LocalPort::LINK_DIR,
+                         (bin_name.gsub(bin_ext, '') + "-"+ bin_version + bin_ext))
+        ret[bin] = link
+        ret
+      }
     end
   end
 

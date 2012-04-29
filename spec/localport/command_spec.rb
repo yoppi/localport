@@ -19,6 +19,10 @@ describe LocalPort::Command do
 end
 
 describe LocalPort::Command, "#install" do
+
+  let(:install) { LocalPort.command.find("install") }
+  LocalPort::LINK_DIR = File.dirname(__FILE__)
+
   context "path is emtpy" do
     it "should raise CommandError in no args" do
       command = LocalPort.command.find("install")
@@ -32,15 +36,34 @@ describe LocalPort::Command, "#install" do
     let(:bin) { File.join(File.dirname(__FILE__), "test/0.0.0/bin/test.exe") }
     let(:app) { File.join(File.dirname(__FILE__), "test/0.0.0") }
     let(:symlink) { File.join(File.dirname(__FILE__), "test-0.0.0.exe") }
-    let(:install) { LocalPort.command.find("install") }
 
     before do
       FileUtils.mkdir_p(File.dirname(bin))
       FileUtils.touch(bin)
-      LocalPort::LINK_DIR = File.dirname(__FILE__)
     end
 
     it "should have .exe in symbolic" do
+      install[:exec].call([app])
+      File.exist?(symlink).should be_true
+    end
+
+    after do
+      FileUtils.rm_rf(File.join(File.dirname(__FILE__), "test"))
+      FileUtils.rm(symlink)
+    end
+  end
+
+  context "install has *sbin* directory application" do
+    let(:sbin) { File.join(File.dirname(__FILE__), "test/0.0.0/sbin/a") }
+    let(:app) { File.join(File.dirname(__FILE__), "test/0.0.0") }
+    let(:symlink) { File.join(File.dirname(__FILE__), "a-0.0.0") }
+
+    before do
+      FileUtils.mkdir_p(File.dirname(sbin))
+      FileUtils.touch(sbin)
+    end
+
+    it "should install sbin file" do
       install[:exec].call([app])
       File.exist?(symlink).should be_true
     end
