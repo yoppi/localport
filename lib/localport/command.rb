@@ -27,6 +27,14 @@ module LocalPort
       )
 
       register_command(
+        :name => "update",
+        :args => true,
+        :exec => lambda {|args|
+          update args
+        }
+      )
+
+      register_command(
         :name => "uninstall",
         :args => true,
         :exec => lambda {|args|
@@ -95,6 +103,15 @@ module LocalPort
           File.symlink(bin, link) unless File.exist? link
         }
       end
+    end
+
+    def update(args)
+      targets = update_apps(args)
+      targets.each {|target|
+        install([installed_dir(target)])
+        config.installed_app() # TODO: もっとエレガントに初期化する方法を考える
+        activate(target)
+      }
     end
 
     def uninstall(args)
@@ -203,6 +220,48 @@ module LocalPort
         ret[bin] = link
         ret
       }
+    end
+
+    # Private: [指定した]アプリケーションのバージョンをつけた文字列配列を生成する
+    #
+    # args - [String], アプリケーションの配列
+    #
+    # Examples:
+    #
+    #   update_apps ["ruby"]
+    #   #=> ["ruby-1.9.2-p130"]
+    #
+    # Returns アプリケーションのバージョンがついた文字列配列
+    def update_apps(args)
+      if args.empty?
+        config.installed.inject([]) {|ret, (app, versions)|
+          ret += versions.keys.map {|version| "#{app}-#{version}"}
+          ret
+        }
+      else
+        args.inject([]) {|ret, arg|
+          versions = config.installed[arg]
+          if versions
+            ret += versions.keys.map {|version| "#{arg}-#{version}"}
+          end
+          ret
+        }
+      end
+    end
+
+    # Private: 指定したアプリケーションがインストールされているディレクトリ名を生成する
+    #
+    # app - String, バージョン付きアプリケーション名
+    #
+    # Examples:
+    #
+    #   installed_dir "ruby-1.9.3-p130"
+    #   #=> /Users/user/local/ruby/1.9.3-p130
+    #
+    # Returns アプリケーションがインストールされているディレクトリ名
+    def installed_dir(appver)
+      app, ver = split_appver_to_app_ver(appver)
+      File.join(LocalPort::APPS_DIR, app, ver)
     end
   end
 
