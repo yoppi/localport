@@ -33,15 +33,15 @@ Ok, Let's control Ruby-1.8.7.-p160 with localport.
 
         $ tar zxvf ruby-1.8.7-p160.tar.gz
         $ cd ruby-1.8.7-p160
-        $ ./configure --prefix=$HOME/apps/ruby/ruby-1.8.7-p160
+        $ ./configure --prefix=$HOME/apps/ruby/1.8.7-p160
 
 2.  Install that to "execution directory"
 
-        $ localport install ~/apps/ruby/ruby-1.8.7-p160
+        $ localport install ~/apps/ruby/1.8.7-p160
 
     This command make symbolic links that are Ruby applications in
 
-        ~/apps/ruby/ruby-1.8.7-p160/bin/*
+        ~/apps/ruby/1.8.7-p160/bin/*
 
 3.  Then, Activate that.
 
@@ -50,7 +50,7 @@ Ok, Let's control Ruby-1.8.7.-p160 with localport.
     This command make installed symbolic ruby-1.8.7-p160 point symbolic link.
 
         $ ls -l ~/local/bin/ruby -> ~/local/bin/ruby-1.8.7-p160
-        $ ls -l ~/local/bin/ruby-1.8.7-p160 -> ~/apps/ruby/ruby-1.8.7-p160/bin/ruby
+        $ ls -l ~/local/bin/ruby-1.8.7-p160 -> ~/apps/ruby/1.8.7-p160/bin/ruby
 
 4.  Deactivate that.
     If you want to execute another Ruby version with no specified version command, 'ruby'.
@@ -66,6 +66,7 @@ This application provide some commands. Like MacPorts.
 - installed
 - activate
 - deactivate
+- update
 
 ### install
 
@@ -91,3 +92,9 @@ To deactivate installed application.
 Delete internal symbolic link.
 
     $ localport deactivate {app}
+
+### update
+Rubygems will install with gem command after localport controlled. Some ${RUBY}/bin/{exec} will be installed but didn't create symbolic link.
+So, update command create symbolic link for these execution files.
+
+    $ localport update {app}
