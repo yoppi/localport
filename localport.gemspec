@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "localport"
-  s.version = "0.0.3"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["yoppi"]
-  s.date = "2012-05-04"
+  s.date = "2012-05-06"
   s.description = "localport is a local application management system"
   s.email = "y.hirokazu@gmail.com"
   s.executables = ["localport"]
