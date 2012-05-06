@@ -165,10 +165,9 @@ module LocalPort
     end
 
     def split_appver_to_app_ver(appver)
-      app = nil
-      config.installed.keys.each do |key|
-        app = key if /^#{key}/ =~ appver
-      end
+      app = config.installed.keys.select {|k|
+        /^#{k}/ =~ appver
+      }.reject {|x| x.nil? || x.empty? }.first
       ver = appver.gsub(/#{app}-?/, '')
 
       [app, ver]
