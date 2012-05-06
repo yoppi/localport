@@ -66,6 +66,7 @@ This application provide some commands. Like MacPorts.
 - installed
 - activate
 - deactivate
+- update
 
 ### install
 
@@ -91,3 +92,9 @@ To deactivate installed application.
 Delete internal symbolic link.
 
     $ localport deactivate {app}
+
+### update
+Rubygems will install with gem command after localport controlled. Some ${RUBY}/bin/{exec} will be installed but didn't create symbolic link.
+So, update command create symbolic link for these execution files.
+
+    $ localport update {app}
