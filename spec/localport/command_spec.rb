@@ -119,6 +119,7 @@ describe LocalPort::Command, "#update" do
       FileUtils.mkdir_p(File.dirname(bin))
       FileUtils.touch(bin)
       File.symlink(bin, symlink)
+      File.symlink(symlink, symlink_app)
     end
 
     it "should update specifed application" do
