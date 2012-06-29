@@ -44,7 +44,6 @@ LocalPort::LINK_DIR = '%s'" % [apps_dir, link_dir]
       symlinks = Dir["#{dir}/*"]
       symlinks.each do |symlink|
         next unless File.symlink? symlink
-
         src = File.readlink symlink
         same_dir_p = same_dir?(src, symlink)
         if same_dir_p

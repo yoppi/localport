@@ -110,7 +110,10 @@ module LocalPort
       targets.each {|target|
         install([installed_dir(target)])
         config.installed_app() # TODO: もっとエレガントに初期化する方法を考える
-        activate(target)
+        app, ver = split_appver_to_app_ver(target)
+        if config.activated[app] == ver
+          activate(target)
+        end
       }
     end
 
