@@ -61,6 +61,9 @@ LocalPort::LINK_DIR = '%s'" % [apps_dir, link_dir]
         # e.g. ruby-1.8.7-p160 => 1.8.7-p160
         symlink_base = File.basename symlink
         src_base = File.basename src
+        src_extname = File.extname(src_base)
+        src_base = src_base.gsub(src_extname, "")
+        symlink_base = symlink_base.gsub(src_extname, "")
         version = symlink_base.gsub(/#{src_base}-?/, '')
 
         # srcがカレントにあるリンクを指しているのなら
