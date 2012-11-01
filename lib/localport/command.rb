@@ -100,7 +100,7 @@ module LocalPort
       paths.each do |path|
         bins = Dir[sanitize(path) + "/bin/*", sanitize(path) + "/sbin/*"]
         symlinks(bins).each {|bin, link|
-          File.symlink(bin, link) unless File.exist? link
+          create_symlink_safely(bin, link)
         }
       end
     end
@@ -188,8 +188,8 @@ module LocalPort
     def create_symlink(app, ver)
       srcs = config.installed[app][ver]
       srcs.each do |src|
-        new = src.gsub(/-?#{ver}/, '')
-        File.symlink(src, new) unless File.exist? new
+        link = src.gsub(/-?#{ver}/, '')
+        create_symlink_safely(src, link)
       end
     end
 
@@ -200,6 +200,14 @@ module LocalPort
       }.each {|src|
         File.unlink src if File.exist? src
       }
+    end
+
+    def create_symlink_safely(src, target)
+      begin
+        File.symlink(src, target) unless File.exist? target
+      rescue => e
+        puts "[#{target}] is maybe broken."
+      end
     end
 
     def sanitize(path)
