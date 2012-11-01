@@ -206,7 +206,7 @@ module LocalPort
       begin
         File.symlink(src, target) unless File.exist? target
       rescue => e
-        puts "[#{target}] is maybe broken."
+        puts "#{target} is maybe broken."
       end
     end
 
