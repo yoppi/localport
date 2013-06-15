@@ -1,9 +1,28 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
+require 'optparse'
+
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'localport'
+
+options = OptionParser.new do |option|
+  option.banner = "Usage: #{__FILE__} [options] command"
+
+  option.separator ""
+
+  option.on("-h", "--help") {
+    puts LocalPort.usage
+    exit
+  }
+
+  option.on("-v", "--version") {
+    puts LocalPort::VERSION
+    exit
+  }
+end.parse!(ARGV.dup)
+
 LocalPort.invoke(ARGV.dup)
 
 # vim: filetype=ruby

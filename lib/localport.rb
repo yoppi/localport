@@ -62,9 +62,12 @@ module LocalPort
 
     def usage
       <<-"USAGE"
-Usage: #{File.basename $0} <command> [app]
-  command list:
-    #{list_command.join("\n    ")}
+Usage:
+
+  #{File.basename $0} command [application_dir] | [--version | --help]
+
+  commands:
+    #{command.commands.map do |name, detail|  name + ": " + detail[:description] end.join("\n    ")}
       USAGE
     end
   end

@@ -18,6 +18,7 @@ module LocalPort
       register_command(
         :name => "install",
         :args => true,
+        :description => "Install specied application.",
         :exec => lambda {|args|
           if args.empty?
             raise LocalPort::CommandError, "must specify to installed application path."
@@ -29,6 +30,7 @@ module LocalPort
       register_command(
         :name => "update",
         :args => true,
+        :description => "Re create symlink each application.",
         :exec => lambda {|args|
           update args
         }
@@ -37,6 +39,7 @@ module LocalPort
       register_command(
         :name => "uninstall",
         :args => true,
+        :description => "Remove symlinks for application.",
         :exec => lambda {|args|
           uninstall args
         }
@@ -45,6 +48,7 @@ module LocalPort
       register_command(
         :name => "installed",
         :args => false,
+        :description => "List installed applications.",
         :exec => lambda {|args|
           if args.size > 0
             args.each do |app|
@@ -67,6 +71,7 @@ module LocalPort
       register_command(
         :name => "activate",
         :args => true,
+        :description => "Create symlink with no-suffix application. To use global.",
         :exec => lambda {|args|
           if args.empty?
             raise LocalPort::CommandError, "must specify verbose application name. {app}-{version}"
@@ -78,6 +83,7 @@ module LocalPort
       register_command(
         :name => "deactivate",
         :args => true,
+        :description => "Remove no-suffix symlink application. To not use global.",
         :exec => lambda {|args|
           if args.empty?
             raise LocalPort::CommandError, "must specify verbose application name. {app}-{version}"
