@@ -13,7 +13,7 @@ require 'localport/command'
 #
 
 module LocalPort
-  VERSION = "0.0.0"
+  VERSION = "0.1.3"
 
   class << self
     def invoke(argv)
