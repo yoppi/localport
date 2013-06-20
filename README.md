@@ -1,10 +1,10 @@
-# Local Application Port System
-Local Application Management system. This application just like MacPorts on Mac
+# Local Application Package Management System
+localport is an application package management system. This application just like MacPorts on Mac
 OS X.
-An application has some versioned. But we use various version case by case.
-For example Ruby application is now moving from 1.8 to 1.9.
-So we must build Ruby 1.8 and Ruby 1.9 environment.
-And so, we use many many middle ware, memcached, redis, MySQL, Varnish...
+An application have some versions. But we use various version case by case.
+For example Ruby application is now moving from 1.9 to 2.0.
+So we must build Ruby 1.9 and Ruby 2.0 environment.
+And so, we use many many middle ware, memcached, Redis, MySQL, Varnish...
 localport make us build multiversion environment easyly.
 
 ## Install
@@ -19,7 +19,7 @@ There is some restrictions, following:
   This directory is called "application directory" on system.
   Like this,
 
-        ~/apps
+        ~/local
 
 * And, you must specify execute directory.
   This directory is called "executional directory"
@@ -27,35 +27,37 @@ There is some restrictions, following:
 
         ~/local/bin
 
-Ok, Let's control Ruby-1.8.7.-p160 with localport.
+Ok, Let's control Ruby-2.0.0.-p195 with localport.
 
-1.  Build, and Install Ruby-1.8.7-p160 to "application directory".
+1.  Build, and Install Ruby-2.0.0-p195 to "application directory".
 
-        $ tar zxvf ruby-1.8.7-p160.tar.gz
-        $ cd ruby-1.8.7-p160
-        $ ./configure --prefix=$HOME/apps/ruby/1.8.7-p160
+        $ tar zxvf ruby-2.0.0-p195.tar.gz
+        $ cd ruby-2.0.0-p195
+        $ mkdir -p ~/local/ruby/2.0.0-p195
+        $ ./configure --prefix=$HOME/local/ruby/2.0.0-p195 --enable-shared
+        $ make install
 
 2.  Install that to "execution directory"
 
-        $ localport install ~/apps/ruby/1.8.7-p160
+        $ localport install ~/local/ruby/2.0.0-p195
 
     This command make symbolic links that are Ruby applications in
 
-        ~/apps/ruby/1.8.7-p160/bin/*
+        ~/local/ruby/2.0.0-p195/bin/*
 
 3.  Then, Activate that.
 
-        $ localport activate ruby-1.8.7-p160
+        $ localport activate ruby-2.0.0-p195
 
-    This command make installed symbolic ruby-1.8.7-p160 point symbolic link.
+    This command make installed symbolic ruby-2.0.0-p195 point symbolic link.
 
-        $ ls -l ~/local/bin/ruby -> ~/local/bin/ruby-1.8.7-p160
-        $ ls -l ~/local/bin/ruby-1.8.7-p160 -> ~/apps/ruby/1.8.7-p160/bin/ruby
+        $ ls -l ~/local/bin/ruby -> ~/local/bin/ruby-2.0.0-p195
+        $ ls -l ~/local/bin/ruby-2.0.0-p195 -> ~/apps/ruby/2.0.0-p195/bin/ruby
 
 4.  Deactivate that.
     If you want to execute another Ruby version with no specified version command, 'ruby'.
 
-        $ locaport deactivate ruby-1.8.7-p160
+        $ locaport deactivate ruby-2.0.0-p195
 
     This command remove symbolic link 'local/bin/ruby'.
 
